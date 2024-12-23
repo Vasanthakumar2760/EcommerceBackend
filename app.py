@@ -84,7 +84,7 @@ def login():
 
     user = mongo.db.users.find_one({"email": data['email']})
     if not user or not bcrypt.check_password_hash(user['password'], data['password']):
-        return jsonify({"message": "Invalid credentials"}), 401
+        return jsonify({"message": "Invalid credentialls"}), 401
 
     access_token = create_access_token(identity=str(user['_id']))
     
