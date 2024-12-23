@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token
 from dotenv import load_dotenv
 from flask_cors import CORS
+from waitress import serve
 
 load_dotenv()
 
@@ -33,7 +34,11 @@ def checkout():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-CORS(app, origins=["http://localhost:5173"], methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type", "Authorization"])
+CORS(app, 
+     origins=["http://localhost:5173", "https://timeo-ecommerce.netlify.app"], 
+     methods=["GET", "POST", "OPTIONS"], 
+     allow_headers=["Content-Type", "Authorization"]
+)
 
 app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -81,6 +86,7 @@ def login():
     return jsonify({"message": "Login successful", "access_token": access_token})
 
 if __name__ == '__main__':
-  
-    port = int(os.environ.get("PORT", 5000)) 
-    app.run(host='0.0.0.0', port=port, debug=True)  
+    
+    serve(app, host='0.0.0.0', port=5000)
+
+ 
