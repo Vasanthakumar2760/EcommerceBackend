@@ -25,8 +25,8 @@ def checkout():
             payment_method_types=['card'],
             line_items=line_items,
             mode='payment',
-            success_url="https://timeo-ecommerce.netlify.app/success",
-            cancel_url="https://timeo-ecommerce.netlify.app/cancel",
+            success_url="http://localhost:5173/success",
+            cancel_url="http://localhost:5173/cancel",
         )
 
         return jsonify({'id': session.id})
