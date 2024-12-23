@@ -14,6 +14,10 @@ app = Flask(__name__)
 
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
+success_url = os.getenv("SUCCESS_URL")  
+cancel_url = os.getenv("CANCEL_URL")    
+
+
 @app.route('/checkout', methods=['POST'])
 def checkout():
     try:
@@ -21,13 +25,14 @@ def checkout():
         if not line_items:
             return jsonify({"error": "No line items provided"}), 400
 
+       
         session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=line_items,
-            mode='payment',
-            success_url="http://localhost:5173/success",
-            cancel_url="http://localhost:5173/cancel",
-        )
+        payment_method_types=['card'],
+        line_items=line_items,
+        mode='payment',
+        success_url=success_url,
+        cancel_url=cancel_url,
+)
 
         return jsonify({'id': session.id})
 
