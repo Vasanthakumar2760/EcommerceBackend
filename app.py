@@ -6,7 +6,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token
 from dotenv import load_dotenv
 from flask_cors import CORS
-
+from waitress import serve
 
 load_dotenv()
 
